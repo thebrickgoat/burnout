@@ -1,63 +1,58 @@
+# OSX
+#
+.DS_Store
 
-# Created by https://www.gitignore.io/api/flutter
-# Edit at https://www.gitignore.io/?templates=flutter
-
-### Flutter ###
-# Flutter/Dart/Pub related
-**/doc/api/
-.dart_tool/
-.flutter-plugins
-.flutter-plugins-dependencies
-.packages
-.pub-cache/
-.pub/
+# Xcode
+#
 build/
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata
+*.xccheckout
+*.moved-aside
+DerivedData
+*.hmap
+*.ipa
+*.xcuserstate
+project.xcworkspace
 
-# Android related
-**/android/**/gradle-wrapper.jar
-**/android/.gradle
-**/android/captures/
-**/android/gradlew
-**/android/gradlew.bat
-**/android/local.properties
-**/android/**/GeneratedPluginRegistrant.java
+# Android/IntelliJ
+#
+build/
+.idea
+.gradle
+local.properties
+*.iml
 
-# iOS/XCode related
-**/ios/**/*.mode1v3
-**/ios/**/*.mode2v3
-**/ios/**/*.moved-aside
-**/ios/**/*.pbxuser
-**/ios/**/*.perspectivev3
-**/ios/**/*sync/
-**/ios/**/.sconsign.dblite
-**/ios/**/.tags*
-**/ios/**/.vagrant/
-**/ios/**/DerivedData/
-**/ios/**/Icon?
-**/ios/**/Pods/
-**/ios/**/.symlinks/
-**/ios/**/profile
-**/ios/**/xcuserdata
-**/ios/.generated/
-**/ios/Flutter/App.framework
-**/ios/Flutter/Flutter.framework
-**/ios/Flutter/Generated.xcconfig
-**/ios/Flutter/app.flx
-**/ios/Flutter/app.zip
-**/ios/Flutter/flutter_assets/
-**/ios/ServiceDefinitions.json
-**/ios/Runner/GeneratedPluginRegistrant.*
-ios/Flutter/Flutter.podspec
-ios/Flutter/flutter_export_environment.sh
-ios/Flutter/Generated.xcconfig
+# node.js
+#
+node_modules/
+package-lock.json # include if you are using yarn - don't use botn yarn and npm
+npm-debug.log
+yarn-error.log
+yarn.lock # include if you are using npm - don't use both npm and yarn
 
-# Exceptions to above rules.
-!**/ios/**/default.mode1v3
-!**/ios/**/default.mode2v3
-!**/ios/**/default.pbxuser
-!**/ios/**/default.perspectivev3
-!/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
+# BUCK
+buck-out/
+\.buckd/
+*.keystore
 
-# End of https://www.gitignore.io/api/flutter
-ios/Flutter/flutter_export_environment.sh
-ios/Flutter/Generated.xcconfig
+# Fastlane
+#
+# It is recommended to not store the screenshots in the git repo. Instead, use Fastlane to re-generate the
+# screenshots whenever they are needed.
+# For more information about the recommended setup visit:
+# https://docs.fastlane.tools/best-practices/source-control/
+
+*/fastlane/report.xml
+*/fastlane/Preview.html
+*/fastlane/screenshots
+
+# Bundle artifact
+*.jsbundle
