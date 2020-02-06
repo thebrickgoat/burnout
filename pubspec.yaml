@@ -73,11 +73,11 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.io/custom-fonts/#from-packages
   fonts:
-    - family: Europa-Bold
-      fonts:
-        - asset: assets/fonts/.15528.otf
-          weight: 700
     - family: Europa-Light
       fonts:
         - asset: assets/fonts/.15529.otf
           weight: 300
+    - family: Europa-Bold
+      fonts:
+        - asset: assets/fonts/.15528.otf
+          weight: 700
