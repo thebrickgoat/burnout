@@ -3,10 +3,15 @@
     "name": "Burnout",
     "privacy": "public",
     "sdkVersion": "34.0.0",
+    "icon": "./assets/images/logo.png",
     "platforms": [
       "ios",
       "android"
     ],
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "backgroundColor": "#1C3B49"
+    },
     "version": "1.0.0",
     "orientation": "portrait",
     "updates": {
@@ -16,7 +21,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.thebrickgoat.burnout"
     }
   }
 }

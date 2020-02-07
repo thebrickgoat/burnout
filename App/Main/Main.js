@@ -102,14 +102,16 @@ export default class Main extends React.Component {
 				<View
 					pointerEvents="box-none"
 					style={{
-						height: "100%",
+						height: "101%",
+						backgroundColor: "#1C3B49"
+
 					}}>
 					<View
 						pointerEvents="box-none"
 						style={{
 							position: "fixed",
-							top: 0,
-							right: "41%",
+							top: -7,
+							right: 215,
 							justifyContent: "center",
 						}}>
 						<Image
@@ -120,23 +122,31 @@ export default class Main extends React.Component {
 						pointerEvents="box-none"
 						style={{
 							position: "absolute",
-							padding: 25,
-							top: "5%",
+							padding: 15,
+							top: "4%",
 							width: "100%"
 						}}>
 						<Text
-							style={styles.theSunWillGoSupeText}>The sun will go supernova and swallow the earth in about…</Text>
+							style={styles.bodyText}>The sun will go supernova and swallow the earth in about…</Text>
 					</View>
 					<View
 						pointerEvents="box-none"
 						style={{
 							position: "absolute",
-							padding: 25,
-							bottom: "5%",
-							width: "100%"
+							padding: 15,
+							bottom: "1%",
+							margin: "4%",
+							width: "92%",
+							backgroundColor:"#fff",
+							borderColor:"#FF9C01",
+							borderStyle:"solid",
+							borderWidth:3,
+							borderRadius:4,
+
+
 						}}>
 						<Text
-							style={styles.factText} 
+							style={styles.bodyButtonText} 
 							onPress={() => Linking.openURL(this.state.randomUrl)}>
 							Before that happens, you should {this.state.randomText}.
 							</Text>
@@ -223,21 +233,19 @@ const styles = StyleSheet.create({
 		backgroundColor: "black",
 		height: "100%",
 	},
-	theSunWillGoSupeText: {
-		color: "white",
+	bodyButtonText:{
+		color: "black",
 		fontFamily: "Europa-Light",
-		fontSize: 32,
+		fontSize: 24,
 		fontStyle: "normal",
-		fontWeight: "bold",
 		textAlign: "center",
 		backgroundColor: "transparent",
 	},
-	factText: {
+	bodyText: {
 		color: "white",
 		fontFamily: "Europa-Light",
-		fontSize: 32,
+		fontSize: 24,
 		fontStyle: "normal",
-		fontWeight: "bold",
 		textAlign: "center",
 		backgroundColor: "transparent",
 	},
@@ -268,7 +276,7 @@ const styles = StyleSheet.create({
 	timerDisplayText: {
 		color: "white",
 		fontFamily: "Europa-Bold",
-		fontSize: 40,
+		fontSize: 30,
 		fontStyle: "normal",
 		fontWeight: "bold",
 		textAlign: "center",
