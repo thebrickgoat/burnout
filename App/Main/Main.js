@@ -9,6 +9,29 @@
 import React from "react"
 import { Image, StyleSheet, View, Text, Animated, Easing, Linking } from "react-native"
 
+import * as firebase from 'firebase';
+import '@firebase/firestore';
+
+// Initialize Firebase
+const firebaseConfig = {
+	apiKey: "AIzaSyBqWUaZtajwOLBDy8bNGwjs6tbmOYp7yVo",
+	authDomain: "burn-out-92efd.firebaseapp.com",
+	databaseURL: "https://burn-out-92efd.firebaseio.com",
+	storageBucket: "burn-out-92efd.appspot.com",
+	projectId: "burn-out-92efd"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+// enable offline reads
+
+firebase.firestore().enablePersistence()
+  .catch(function(err) {
+	  if (err.code == 'failed-precondition') {} 
+	  else if (err.code == 'unimplemented') {}
+  });
+
+
 export default class Main extends React.Component {
 
 	static navigationOptions = ({ navigation }) => {
@@ -23,10 +46,10 @@ export default class Main extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			group7ImageRotate: new Animated.Value(-1),
-			group8ImageRotate: new Animated.Value(-1),
+			group7ImageRotate: new Animated.Value(0),
+			group8ImageRotate: new Animated.Value(0),
 			timer: 0,
-			randomText: "sting", 
+			randomText: "sting",
 			randomUrl: "sting"
 		}
 	}
@@ -51,17 +74,29 @@ export default class Main extends React.Component {
 	}
 
 	generateFact = () => {
-		const facts = [
-			{id: 1, title: 'eat a good meal', content: 'things to eat before you die'},
-			{id: 2, title: 'read a good book', content: 'best books to read before you die'},
-			{id: 3, title: 'go to a state park', content: 'best state parks'},
-			{id: 4, title: 'make a puppet of yourself', content: 'how to make a muppet'},
-		];
-		var fact = facts[facts.length * Math.random() | 0]
-		this.state.randomUrl = "https://www.google.com/search?q=" + fact.content
-		this.state.randomText = fact.title
+
+		let facts = []
+		var db = firebase.firestore().collection("things to do");
+		db.get().then((querySnapshot) => {
+			querySnapshot.forEach((doc) => {
+				facts.push(doc.data());
+			});
+			var fact = facts[facts.length * Math.random() | 0]
+			this.state.randomUrl = "https://www.google.com/search?q=" + fact.google
+			this.state.randomText = fact.thing
+		});
+		
+		//add to database
+		//const factsBackup = [
+		//];
+		//factsBackup.forEach(element => {
+			//db.add({
+			//	thing: element.title,
+			//	google: element.content
+			//})
+		//});
 	}
-	
+
 	componentDidMount() {
 		this.startAnimationOne();
 		this.startTimer();
@@ -72,18 +107,22 @@ export default class Main extends React.Component {
 		// Set animation initial values to all animated properties
 		this.state.group8ImageRotate.setValue(0)
 		this.state.group7ImageRotate.setValue(0)
-		// Configure animation and trigger
-		Animated.parallel([Animated.parallel([Animated.timing(this.state.group8ImageRotate, {
-			duration: 60000,
-			easing: Easing.bezier(0, 0, 1, 1),
-			toValue: 1,
-		})]), Animated.parallel([Animated.timing(this.state.group7ImageRotate, {
-			duration: 35000,
-			easing: Easing.bezier(0, 0, 1, 1),
-			toValue: 1,
-		})])]).start(() => {
-			this.startAnimationOne();
-		});
+		Animated.loop(
+			Animated.parallel([
+				Animated.timing(this.state.group7ImageRotate, {
+					duration: 50000,
+					easing: Easing.bezier(0, 0, 1, 1),
+					toValue: 1,
+					delay: 0
+				}),
+				Animated.timing(this.state.group8ImageRotate, {
+					duration: 50000,
+					easing: Easing.bezier(0, 0, 1, 1),
+					toValue: 1,
+					delay: 0
+				})
+			])
+		).start()
 	}
 
 	render() {
@@ -110,8 +149,8 @@ export default class Main extends React.Component {
 						pointerEvents="box-none"
 						style={{
 							position: "fixed",
-							top: -7,
-							right: 215,
+							top: -8,
+							right: 216,
 							justifyContent: "center",
 						}}>
 						<Image
@@ -127,26 +166,23 @@ export default class Main extends React.Component {
 							width: "100%"
 						}}>
 						<Text
-							style={styles.bodyText}>The sun will go supernova and swallow the earth in about…</Text>
+							style={styles.bodyText}>The sun will swallow the earth in about…</Text>
 					</View>
 					<View
 						pointerEvents="box-none"
 						style={{
 							position: "absolute",
+							margin:"5%",
 							padding: 15,
-							bottom: "1%",
-							margin: "4%",
-							width: "92%",
-							backgroundColor:"#fff",
-							borderColor:"#FF9C01",
-							borderStyle:"solid",
-							borderWidth:3,
-							borderRadius:4,
-
+							bottom: 0,
+							width: "90%",
+							borderColor:"white",
+							borderWidth:"1px",
+							borderRadius:"4"
 
 						}}>
 						<Text
-							style={styles.bodyButtonText} 
+							style={styles.bodyText}
 							onPress={() => Linking.openURL(this.state.randomUrl)}>
 							Before that happens, you should {this.state.randomText}.
 							</Text>
@@ -208,7 +244,6 @@ export default class Main extends React.Component {
 					bottom: 0,
 					justifyContent: "center",
 					width: "100%",
-					textAlign: "center"
 
 				}}>
 				<View
@@ -233,13 +268,15 @@ const styles = StyleSheet.create({
 		backgroundColor: "black",
 		height: "100%",
 	},
-	bodyButtonText:{
-		color: "black",
+	bodyButtonText: {
+		color: "white",
 		fontFamily: "Europa-Light",
 		fontSize: 24,
 		fontStyle: "normal",
 		textAlign: "center",
-		backgroundColor: "transparent",
+		textShadowColor: 'rgba(0, 0, 0, 0.45)',
+		textShadowOffset: { width: -1, height: 1 },
+		textShadowRadius: 3
 	},
 	bodyText: {
 		color: "white",
@@ -247,7 +284,9 @@ const styles = StyleSheet.create({
 		fontSize: 24,
 		fontStyle: "normal",
 		textAlign: "center",
-		backgroundColor: "transparent",
+		textShadowColor: 'rgba(0, 0, 0, 0.45)',
+		textShadowOffset: { width: -1, height: 1 },
+		textShadowRadius: 3
 	},
 	group7ImageAnimated: {
 		width: 213,
@@ -282,6 +321,9 @@ const styles = StyleSheet.create({
 		textAlign: "center",
 		backgroundColor: "transparent",
 		alignSelf: "center",
+		textShadowColor: 'rgba(0, 0, 0, 0.45)',
+		textShadowOffset: { width: -1, height: 1 },
+		textShadowRadius: 3
 	},
 	secondsText: {
 		color: "white",
@@ -294,5 +336,8 @@ const styles = StyleSheet.create({
 		left: 0,
 		right: 0,
 		bottom: 0,
+		textShadowColor: 'rgba(0, 0, 0, 0.45)',
+		textShadowOffset: { width: -1, height: 1 },
+		textShadowRadius: 3
 	},
 })
