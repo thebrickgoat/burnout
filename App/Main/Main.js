@@ -23,15 +23,6 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-// enable offline reads
-
-firebase.firestore().enablePersistence()
-  .catch(function(err) {
-	  if (err.code == 'failed-precondition') {} 
-	  else if (err.code == 'unimplemented') {}
-  });
-
-
 export default class Main extends React.Component {
 
 	static navigationOptions = ({ navigation }) => {
